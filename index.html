@@ -44,6 +44,7 @@
                 var r = new RegExp(name + '=' + '(' + regex + ')[&]?', 'i');
                 return decodeURIComponent(((window.location.search || '').match(r) || [])[1] || '');
             }
+            
 
             var debugMode = getParam('debug-mode', '[^&]+').trim() === '1';
             if (debugMode) molstar.setDebugMode(debugMode);
@@ -83,6 +84,16 @@
                 allowMajorPerformanceCaveat: allowMajorPerformanceCaveat,
                 powerPreference: powerPreference || 'high-performance',
             }).then(viewer => {
+                
+                // data source
+                var dataSource = getParam('data-source', '[^&]+').trim();
+                if (dataSource) {
+                    console.log(dataSource)
+                    viewer.openTomoZip(dataSource);
+                }
+
+
+                
                 var snapshotId = getParam('snapshot-id', '[^&]+').trim();
                 if (snapshotId) viewer.setRemoteSnapshot(snapshotId);
 
